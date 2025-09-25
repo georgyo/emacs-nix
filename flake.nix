@@ -46,7 +46,7 @@
               lsp-mode
               treesit-grammars.with-all-grammars
             ];
-          doomDir = ./doomdir;
+          doomDir = lib.sources.sourceFilesBySuffices self [ ".el" ];
           doomLocalDir = "~/.local/share/nix-doom";
           extraBinPackages = with pkgs; [
             git
