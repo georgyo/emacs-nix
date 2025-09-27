@@ -1,7 +1,8 @@
 {
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    flake-utils.url = "github:numtide/flake-utils";
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    # flake-utils.url = "github:numtide/flake-utils";
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs = {
@@ -21,41 +22,44 @@
 
   };
   outputs =
-    {
-      self,
-      nixpkgs,
-      flake-utils,
-      ...
-    }@inputs:
-    flake-utils.lib.eachDefaultSystem (
-      system:
-      let
-        pkgs = import nixpkgs {
-          inherit system;
-          overlays = [
-            inputs.nix-doom-emacs.overlays.default
-          ];
-        };
-        lib = pkgs.lib;
-      in
+    inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      { ... }:
       {
-        packages.default = pkgs.emacsWithDoom {
-          emacs = pkgs.emacsNativeComp;
-          extraPackages =
-            epkgs: with epkgs; [
-              lsp-mode
-              treesit-grammars.with-all-grammars
-            ];
-          doomDir = lib.sources.sourceFilesBySuffices self [ ".el" ];
-          doomLocalDir = "~/.local/share/nix-doom";
-          extraBinPackages = with pkgs; [
-            git
-            fd
-            ripgrep
-            nixd
-          ];
-        };
-        formatter = pkgs.nixfmt-tree;
+        systems = [ "x86_64-linux" ];
+        perSystem =
+          {
+            lib,
+            pkgs,
+            ...
+          }:
+          {
+            packages =
+              let
+                # call this overlay without actually being an overlay, this prevents us from actually initalizing nixpkgs
+                doom-overlay = self: inputs.nix-doom-emacs.overlays.default (pkgs // self) { };
+                inherit (lib.fix doom-overlay) emacsWithDoom;
+              in
+              {
+                default = emacsWithDoom {
+                  emacs = pkgs.emacsNativeComp;
+                  extraPackages =
+                    epkgs: with epkgs; [
+                      lsp-mode
+                      treesit-grammars.with-all-grammars
+                    ];
+                  doomDir = lib.sources.sourceFilesBySuffices inputs.self [ ".el" ];
+                  doomLocalDir = "~/.local/share/nix-doom";
+                  extraBinPackages = with pkgs; [
+                    git
+                    fd
+                    ripgrep
+                    nixd
+                  ];
+                };
+              };
+            formatter = pkgs.nixfmt-tree;
+          };
       }
     );
 }
