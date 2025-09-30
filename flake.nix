@@ -16,6 +16,7 @@
     };
     nix-doom-emacs = {
       url = "github:marienz/nix-doom-emacs-unstraightened";
+      inputs.nixpkgs.follows = "nixpkgs";
       inputs.doomemacs.follows = "doomemacs";
       inputs.emacs-overlay.follows = "emacs-overlay";
     };
