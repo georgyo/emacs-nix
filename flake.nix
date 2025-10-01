@@ -32,6 +32,7 @@
           {
             lib,
             pkgs,
+            self',
             ...
           }:
           {
@@ -58,6 +59,8 @@
                     nixd
                   ];
                 };
+
+                e = pkgs.callPackage ./e.nix { emacs = self'.packages.default; };
               };
             formatter = pkgs.nixfmt-tree;
           };
