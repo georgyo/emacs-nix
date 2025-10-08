@@ -37,6 +37,23 @@
         "type": "github"
       }
     },
+    "emacs_src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1759952593,
+        "narHash": "sha256-+0ZBKK/fH8GrCSnxxp7L/XclurBTyYUsHtrsTQYHbGI=",
+        "owner": "janestreet",
+        "repo": "emacs",
+        "rev": "31a5f279ffffae16a565bb3a4b88afcd615ff8ac",
+        "type": "github"
+      },
+      "original": {
+        "owner": "janestreet",
+        "ref": "emacs-30",
+        "repo": "emacs",
+        "type": "github"
+      }
+    },
     "flake-parts": {
       "inputs": {
         "nixpkgs-lib": "nixpkgs-lib"
@@ -117,6 +134,7 @@
       "inputs": {
         "doomemacs": "doomemacs",
         "emacs-overlay": "emacs-overlay",
+        "emacs_src": "emacs_src",
         "flake-parts": "flake-parts",
         "nix-doom-emacs": "nix-doom-emacs",
         "nixpkgs": "nixpkgs"

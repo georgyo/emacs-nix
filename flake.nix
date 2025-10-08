@@ -3,6 +3,10 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
     # flake-utils.url = "github:numtide/flake-utils";
+    emacs_src = {
+      url = "github:janestreet/emacs/emacs-30";
+      flake = false;
+    };
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs = {
@@ -43,8 +47,19 @@
                 inherit (lib.fix doom-overlay) emacsWithDoom;
               in
               {
+                emacs = pkgs.emacsNativeComp.overrideAttrs (
+                  new: old: {
+                    nativeBuildInputs = old.nativeBuildInputs ++ [
+                      pkgs.autoPatchelfHook
+                      pkgs.autoconf
+                      pkgs.texinfo
+                    ];
+                    src = inputs.emacs_src;
+                    patches = [ ];
+                  }
+                );
                 default = emacsWithDoom {
-                  emacs = pkgs.emacsNativeComp;
+                  emacs = self'.packages.emacs;
                   extraPackages =
                     epkgs: with epkgs; [
                       lsp-mode
