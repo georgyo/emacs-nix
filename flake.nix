@@ -47,17 +47,21 @@
                 inherit (lib.fix doom-overlay) emacsWithDoom;
               in
               {
-                emacs = pkgs.emacsNativeComp.overrideAttrs (
-                  new: old: {
-                    nativeBuildInputs = old.nativeBuildInputs ++ [
-                      pkgs.autoPatchelfHook
-                      pkgs.autoconf
-                      pkgs.texinfo
-                    ];
-                    src = inputs.emacs_src;
-                    patches = [ ];
-                  }
-                );
+                emacs =
+                  (pkgs.emacsNativeComp.overrideAttrs (
+                    new: old: {
+                      src = pkgs.fetchFromGitHub {
+                        owner = "janestreet";
+                        repo = "emacs";
+                        rev = inputs.emacs_src.rev;
+                        hash = inputs.emacs_src.narHash;
+                      };
+                    }
+                  )).override
+                    {
+                      withCompressInstall = false;
+                      srcRepo = true;
+                    };
                 default = emacsWithDoom {
                   emacs = self'.packages.emacs;
                   extraPackages =
