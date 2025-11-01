@@ -48,7 +48,7 @@
               in
               {
                 emacs =
-                  (pkgs.emacsNativeComp.overrideAttrs (
+                  (pkgs.emacs.overrideAttrs (
                     new: old: {
                       src = pkgs.fetchFromGitHub {
                         owner = "janestreet";
