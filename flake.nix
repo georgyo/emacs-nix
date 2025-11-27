@@ -3,10 +3,6 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     flake-parts.url = "github:hercules-ci/flake-parts";
     # flake-utils.url = "github:numtide/flake-utils";
-    emacs_src = {
-      url = "github:janestreet/emacs/emacs-30";
-      flake = false;
-    };
     emacs-overlay = {
       url = "github:nix-community/emacs-overlay";
       inputs = {
@@ -47,23 +43,8 @@
                 inherit (lib.fix doom-overlay) emacsWithDoom;
               in
               {
-                emacs =
-                  (pkgs.emacs.overrideAttrs (
-                    new: old: {
-                      src = pkgs.fetchFromGitHub {
-                        owner = "janestreet";
-                        repo = "emacs";
-                        rev = inputs.emacs_src.rev;
-                        hash = inputs.emacs_src.narHash;
-                      };
-                    }
-                  )).override
-                    {
-                      withCompressInstall = false;
-                      srcRepo = true;
-                    };
                 default = emacsWithDoom {
-                  emacs = self'.packages.emacs;
+                  emacs = pkgs.emacs;
                   extraPackages =
                     epkgs: with epkgs; [
                       lsp-mode
