@@ -48,7 +48,13 @@
                   extraPackages =
                     epkgs: with epkgs; [
                       lsp-mode
-                      treesit-grammars.with-all-grammars
+                      (treesit-grammars.with-grammars (
+                        g: with g; [
+                          tree-sitter-bash
+                          tree-sitter-nix
+                          tree-sitter-json
+                        ]
+                      ))
                     ];
                   doomDir = lib.sources.sourceFilesBySuffices inputs.self [ ".el" ];
                   doomLocalDir = "~/.local/share/nix-doom";
