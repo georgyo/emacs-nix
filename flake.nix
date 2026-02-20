@@ -51,8 +51,17 @@
                       (treesit-grammars.with-grammars (
                         g: with g; [
                           tree-sitter-bash
-                          tree-sitter-nix
+                          tree-sitter-cmake
+                          tree-sitter-css
+                          tree-sitter-go
                           tree-sitter-json
+                          tree-sitter-make
+                          tree-sitter-nix
+                          tree-sitter-ocaml
+                          tree-sitter-python
+                          tree-sitter-rust
+                          tree-sitter-tsx
+                          tree-sitter-typescript
                         ]
                       ))
                     ];
