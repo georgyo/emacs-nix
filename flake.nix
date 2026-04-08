@@ -67,7 +67,7 @@
                     ];
                   doomDir = lib.sources.sourceFilesBySuffices inputs.self [ ".el" ];
                   doomLocalDir = "~/.local/share/nix-doom";
-                  experimentalFetchTree = true;
+                  experimentalFetchTree = false;
                   extraBinPackages = with pkgs; [
                     git
                     fd
