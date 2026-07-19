@@ -104,11 +104,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1784368167,
-        "narHash": "sha256-6wEBLmLdxj/vmkpsaf0uFxVolyI8R/417RdYtQuLQcc=",
+        "lastModified": 1784455325,
+        "narHash": "sha256-YOfuH4sJIbxTfWM7l1fBqq9gPaA6GIkdVwi7eq2Gfd0=",
         "owner": "marienz",
         "repo": "nix-doom-emacs-unstraightened",
-        "rev": "c5f1c84cb8fc234568368e3375e7c46db8334c4f",
+        "rev": "f4d1891ce6fa3344d2c81a6e7eb2011d6a30bf2d",
         "type": "github"
       },
       "original": {
