@@ -22,6 +22,14 @@
     };
 
   };
+
+  nixConfig = {
+    extra-substituters = [ "https://cache.fu.io" ];
+    extra-trusted-public-keys = [
+      "georgyo-1:2yY6X+H3y0xp9e94WQsjXlWNDX2ElWWrp5P89pQ9zPM="
+    ];
+  };
+
   outputs =
     inputs@{ flake-parts, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } (
