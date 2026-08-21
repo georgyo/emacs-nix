@@ -74,3 +74,23 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+;;; ghostel -- terminal emulator powered by libghostty.
+;;
+;; ghostel and its native module (ghostel-module.so) come from Nix, via
+;; `extraPackages' in flake.nix.
+(use-package! ghostel
+  :defer t
+  :init
+  ;; Doom only gathers autoloads for the packages it manages itself, so
+  ;; ghostel's own autoloads have to be registered by hand -- without this
+  ;; there is no `M-x ghostel', `ghostel-compile', etc.
+  (when-let* ((autoloads (locate-library "ghostel-autoloads")))
+    (load autoloads nil t))
+  ;; The module ships inside the read-only Nix store, so never offer to
+  ;; download or compile a replacement (the default is to ask).
+  (setq ghostel-module-auto-install nil))
+
+(use-package! evil-ghostel
+  :after ghostel
+  :hook (ghostel-mode . evil-ghostel-mode))

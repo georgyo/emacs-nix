@@ -56,6 +56,8 @@
                   extraPackages =
                     epkgs: with epkgs; [
                       lsp-mode
+                      ghostel
+                      evil-ghostel
                       (treesit-grammars.with-grammars (
                         g: with g; [
                           tree-sitter-bash
